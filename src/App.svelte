@@ -1,25 +1,43 @@
 <script>
-  import { onMount } from "svelte";
-  import MatchGrid from "./components/MatchGrid.svelte";
-  import Login from "./components/Login.svelte";
+  import router from 'page'
 
-  export let user;
+  // Include our Routes
+  import LoginPage from './routes/LoginPage.svelte'
+  import SignupPage from './routes/SignupPage.svelte'
+  import Dashboard from './routes/Dashboard.svelte'
 
-  onMount(async () => {
-    
-  });
+  // Variables
+  let page
+  let params
+  let user = "nQlctvrF2SYFplFJ3viagqtq8H82"
+
+  // Login Page Route
+  router('/login', () => (page = LoginPage))
+
+  // Signup Page Route
+  router('/signup', () => (page = SignupPage))
+
+  // Dashboard Page Route, If No User Detected -> Send to Login
+  router('/', () => {
+    // If the user is not set, redirect to login
+    if (! user) {
+      router.redirect('/login')
+  }
+    page = Dashboard
+  })
+
+  // Set up the router to start and actively watch for changes
+  router.start()
 </script>
 
-<main>
-{#if user}
-<MatchGrid />
-{:else}
-<Login />
-{/if}
-</main>
+<svelte:component this="{page}" params="{params}" />
 
 <style>
-:global(body) {
-  background-color: #011028;
-}
+  :global(body) {
+    background-color: #011028;
+  }
+  :global(main) {
+    max-width: 90%;
+    min-width: 80%
+  }
 </style>
