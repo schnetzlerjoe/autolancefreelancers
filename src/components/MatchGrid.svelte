@@ -32,11 +32,6 @@
 {/if}
 
 <style>
-.loading {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-}
 .project-div {
     display: -webkit-box;
     display: -webkit-flex;

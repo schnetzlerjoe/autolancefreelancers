@@ -1,74 +1,125 @@
 <script>
+    export let user;
 </script>
 
-<div class="section">
-    <h1 class="header-call-action">Signup</h1>
-    <div class="columns is-multiline is-centered">
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Email</label>
+<div class="search-div">
+    <div class="columns">
+        <div class="column is-6">
+            <h1 class="freelancer-name">Joe Schnetzler</h1>
         </div>
-        <div class="column is-11 is-centered">
-            <input type="email" class="input" maxlength="256" data-name="" placeholder="Enter your email" id="signinemail" required="">
+        <div class="column is-6 alignRight" align="right">
+            <a href="#" id="subscribe-button" class="subscribe-button w-button">Subscribe</a>
         </div>
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Password</label>
+    </div>
+    <div class="block">
+        <p class="paragraph-11">
+            <strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</strong>
+        </p>
+    </div>
+    <div id="skill-tags-grid" class="columns is-multiline">
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Data Science</a>
         </div>
-        <div class="column is-11 is-centered">
-            <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpass" required="">
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Python</a>
         </div>
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Confirm Password</label>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Selenium</a>
         </div>
-        <div class="column is-11 is-centered">
-            <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpassconfirm" required="">
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Web Scraper</a>
         </div>
-        <div class="column is-11 is-centered">
-            <a href="/login"><label class="label field-label signup-login-toggle-text">Have an account already?</label></a>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Data Mining</a>
         </div>
-        <div class="column is-11 is-centered">
-            <button type="submit" data-wait="Please wait..." id="signinButton" class="button login-button margin-top-fifteen">Signup</button>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Data Scraping</a>
+        </div>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Deep Learning</a>
+        </div>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Machine Learning</a>
+        </div>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Data Visualization</a>
+        </div>
+        <div class="column is-2">
+            <a href="#" class="skill-tags w-button">Artificial Intelligence</a>
         </div>
     </div>
 </div>
 
 <style>
-.header-call-action {
-    margin-bottom: 20px;
-    color: #fff;
-    font-size: 60px;
-    line-height: 60px;
-    font-weight: 600;
-    text-align: center;
+.alignRight {
+    justify-content: flex-end;
 }
-.field-label {
-    color: #fff;
-    font-family: Arial,sans-serif;
-    line-height: 20px;
+.search-div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 20px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 1px 0 8px 4px rgba(0, 0, 0, 0.1);
+}
+.freelancer-name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #141414;
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 600;
     text-align: left;
 }
-.column {
-    padding: .3rem;
-}
-.login-button {
-    height: 60px;
-    background-color: #799ef6;
-    border-width: 0px;
-    color: #fff;
+.subscribe-button {
+    display: block;
+    width: 30%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
     border-radius: 5px;
+    background-color: #799ef6;
     font-weight: 600;
     text-align: center;
-    width: 100%;
 }
-.margin-top-fifteen {
-    margin-top: 15px;
-}
-.input {
-    height: 60px;
-}
-.signup-login-toggle-text {
-    text-align: center;
-    text-decoration: underline;
+.w-button {
+    display: inline-block;
+    padding: 9px 15px;
+    color: white;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
     cursor: pointer;
+}
+.skill-tags {
+    display: block;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #6c757d;
+    font-weight: 600;
+    text-align: center;
+    cursor: default;
 }
 </style>
