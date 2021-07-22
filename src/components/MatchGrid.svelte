@@ -1,17 +1,11 @@
 <script>
+    import Loader from './Loader.svelte'
+
     export let matches = null;
 </script>
 
-<svelte:head>
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
-  />
-  <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</svelte:head>
-
 {#if matches}
+    <h1 class="header-call-action">My Matches</h1>
     <div class="columns is-multiline">
         {#each matches as match}
             <div class="column is-4 is-centered is-vcentered">
@@ -34,9 +28,7 @@
         {/each}
     </div>
 {:else}
-    <div>
-        <p class="content loading">Loading...</p>
-    </div>
+    <Loader />
 {/if}
 
 <style>
@@ -95,5 +87,13 @@
 }
 .bold-text-2 {
     color: #799ef6;
+}
+.header-call-action {
+    margin-bottom: 40px;
+    color: #fff;
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 600;
+    text-align: center;
 }
 </style>
