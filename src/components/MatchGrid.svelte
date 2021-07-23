@@ -12,14 +12,9 @@
                 <div project="' + projectID + '" class="project-div">
                     <h1 class="project-title">{match.Title}</h1>
                     <div class="columns w-row">
-                        <div class="column is-6 w-col w-col-6">
+                        <div class="column is-12">
                             <h1 class="project-title summary-dash">
-                                <strong class="bold-text-2">{match.Num_Matches} Matches</strong>
-                            </h1>
-                        </div>
-                        <div class="column is-6 w-col w-col-6">
-                            <h1 class="project-title summary-dash">
-                                <strong class="bold-text-2">${match.Spent} Spent</strong>
+                                <strong class="bold-text-2">{match.Company}</strong>
                             </h1>
                         </div>
                     </div>

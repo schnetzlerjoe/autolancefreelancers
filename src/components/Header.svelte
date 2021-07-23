@@ -16,7 +16,7 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
                 <a class="navbar-item a-hover" href="/">
-                    Matches
+                    Home
                 </a>
 
                 <a class="navbar-item a-hover" href="/settings">
@@ -29,7 +29,7 @@
 
                 <div class="navbar-item">
                     <a class="button is-secondary" href="/profile">
-                        <strong>Profile</strong>
+                        <strong>My Listing</strong>
                     </a>
                 </div>           
             </div>

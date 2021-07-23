@@ -19,13 +19,27 @@ function getFreelancersMatchDocs(uid) {
     })
 }
 
-function getAllFreelancersMatchDocs(uid) {
+function getCompanyInfoFromReference(reference) {
+    return new Promise((resolve, reject) => {
+        reference.get().then((doc) => {
+            resolve(doc.data());
+        })
+    })
+}
+
+async function getAllFreelancersMatchDocs(uid) {
     return new Promise((resolve, reject) => {
         getFreelancersMatchDocs(uid).then((matches) => {
             var data = [];
+            var rawData = [];
             matches.forEach((match) => {
                 match.get().then((newDoc) => {
-                    data.push(newDoc.data())
+                    rawData = newDoc.data()
+                    getCompanyInfoFromReference(rawData["Company"]).then((comp) => {
+                        console.log(comp)
+                    })
+                }).then(() => {
+                    data.push(rawData)
                 }).then(() => {
                     resolve(data);
                 })

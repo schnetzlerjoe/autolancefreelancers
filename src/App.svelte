@@ -6,6 +6,8 @@
   import SignupPage from './routes/SignupPage.svelte';
   import Dashboard from './routes/Dashboard.svelte';
   import Profile from './routes/Profile.svelte';
+  import Settings from './routes/Settings.svelte';
+
   import Header from './components/Header.svelte';
   import Footer from './components/Footer.svelte';
 
@@ -22,6 +24,9 @@
 
   // Profile Page Route
   router('/profile', () => (page = Profile))
+
+  // Profile Page Route
+  router('/settings', () => (page = Settings))
 
   // Dashboard Page Route, If No User Detected -> Send to Login
   router('/', () => {
