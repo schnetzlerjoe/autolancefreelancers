@@ -17,9 +17,11 @@
     "vercel": "^23.0.1"
   },
   "dependencies": {
+    "firebase": "^8.8.0",
     "firebase-admin": "^9.11.0",
     "page": "^1.11.6",
     "sirv-cli": "^1.0.0",
-    "svelte-tags-input": "^2.7.1"
+    "svelte-tags-input": "^2.7.1",
+    "sveltefire": "^0.1.5"
   }
 }

@@ -1,5 +1,26 @@
 <script>
     export let user;
+
+    import firebase from 'firebase/app';
+    import 'firebase/auth';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDMcOBXFry4daxIxTMlJL5twW0aFqq-62E",
+        authDomain: "autolance-617.firebaseapp.com",
+        projectId: "autolance-617",
+        appId: "1:218900921287:web:ef0384dc3215438bb6b7e2",
+        measurementId: "G-13TQ6HPS8X"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    } else {
+        firebase.app();
+    }
+
+    const auth = firebase.auth();
+
+    const logout = () => auth.signOut();
 </script>
 {#if user}
     <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
@@ -23,7 +44,7 @@
                     Settings
                 </a>
 
-                <a class="navbar-item a-hover">
+                <a on:click={logout} class="navbar-item a-hover">
                     Logout
                 </a>
 
@@ -52,7 +73,7 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <a class="button is-primary" href="/login">
+                    <a class="button is-secondary" href="/login">
                         <strong>Login</strong>
                     </a>
                     <a class="button is-secondary" href="/signup">
