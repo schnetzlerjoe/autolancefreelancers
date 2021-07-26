@@ -49,6 +49,8 @@ async function getAllFreelancersMatchDocs(uid) {
 }
 
 module.exports = (req, res) => {
+    console.log(req.get('Authorization').split(' ')[1])
+    admin.auth().verifyIdToken(req.get('Authorization').split(' ')[1])
     getAllFreelancersMatchDocs(req.query.uid).then((data) => {
         res.status(200).json(data);
     })

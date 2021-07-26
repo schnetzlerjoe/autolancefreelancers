@@ -17,7 +17,12 @@
         router.redirect("/login")
       } else{
         onMount(async () => {
-          const res = await fetch("/api/getMatches?uid=" + currentuser.uid);
+          const token = await currentuser.getTokenId()
+          const res = await fetch("/api/getMatches", {
+            headers: new Headers({
+              'Authorization': token
+            })
+          });
           const matchesRet = await res.json();
           retMatches = matchesRet;
         });
