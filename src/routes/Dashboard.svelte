@@ -15,9 +15,9 @@
       currentuser = $user;
       if(!currentuser) {
         router.redirect("/login")
-      } else{
+      } else {
         onMount(async () => {
-          const token = await currentuser.getTokenId()
+          const token = await currentuser.getIdToken()
           const res = await fetch("/api/getMatches", {
             headers: new Headers({
               'Authorization': token
@@ -26,6 +26,7 @@
           const matchesRet = await res.json();
           retMatches = matchesRet;
         });
+        console.log(document.cookie);
       }
     }
 </script>

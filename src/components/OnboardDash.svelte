@@ -1,9 +1,42 @@
 <script>
     import Steps from './Steps.svelte'
     import Tags from "svelte-tags-input";
+    import { user } from '../auth/index';
 
     let links = ["https://www.linkedin.com/", "https://github.com/", "https://dribbble.com/"];
     let industries = ["FreelanceTech", "B2B"];
+
+    let currentuser;
+
+    async function setTokenCookie(currentuser) {
+        var token = await currentuser.getIdToken(true);
+        document.cookie = "token=" + token + "; SameSite=None; Secure; HttpOnly";
+    }
+
+    // Declare reactive statements for redirection if user is not logged in
+    $: {
+        currentuser = $user;
+        if(currentuser && currentuser != null) {
+            setTokenCookie();
+        }
+    }
+
+    async function updateFreelancer() {
+        var data = {
+            name: document.getElementById("name").value,
+            industries: document.getElementById("industries").value,
+            links: document.getElementById("links").value
+        };
+        const token = await currentuser.getIdToken();
+        const res = await fetch("/api/freelancers/put", {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+          });
+    }
 </script>
 
 <svelte:head>
@@ -35,7 +68,7 @@
         </div>
         <div class="column is-12 is-centered">
             <div class="Tags">
-                <Tags maxTags={5} onlyUnique={true} tags={industries}></Tags>
+                <Tags id="industries" maxTags={5} onlyUnique={true} tags={industries}></Tags>
             </div>
         </div>
         <div class="column is-12 is-centered">
@@ -43,11 +76,11 @@
         </div>
         <div class="column is-12 is-centered">
             <div class="Tags">
-                <Tags maxTags={5} onlyUnique={true} tags={links}></Tags>
+                <Tags id="links" maxTags={5} onlyUnique={true} tags={links}></Tags>
             </div>
         </div>
         <div class="column is-12">
-            <button id="saveButton" class="button login-button margin-top-fifteen">Save</button>
+            <button on:click={updateFreelancer} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
         </div>
     </div>
 </div>

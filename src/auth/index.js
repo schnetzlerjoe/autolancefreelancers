@@ -19,7 +19,7 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 
 export let user = readable(null, (set) => {
-  auth.onAuthStateChanged(function(user) {
-    set(auth.currentUser)
+  auth.onAuthStateChanged(async function(user) {
+    set(user)
   });
 });

@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('~/credentials.json');
+const serviceAccount = require('C:/Users/bigkn/OneDrive/Documents/autolancefreelancers-1/credentials.json');
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -48,10 +48,14 @@ async function getAllFreelancersMatchDocs(uid) {
     })
 }
 
-module.exports = (req, res) => {
-    console.log(req.get('Authorization').split(' ')[1])
-    admin.auth().verifyIdToken(req.get('Authorization').split(' ')[1])
-    getAllFreelancersMatchDocs(req.query.uid).then((data) => {
+module.exports = async (req, res) => {
+    console.log(req.cookie);
+    const cookieValue = req.cookie
+    .split('; ')
+    .find(row => row.startsWith('token='))
+    .split('=')[1];
+    const user = await admin.auth().verifyIdToken(cookieValue);
+    getAllFreelancersMatchDocs(user.uid).then((data) => {
         res.status(200).json(data);
     })
   };
