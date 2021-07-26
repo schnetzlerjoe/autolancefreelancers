@@ -2,12 +2,23 @@
     import EditListing from '../components/EditListing.svelte';
     import Listing from '../components/Listing.svelte';
     import Loader from '../components/Loader.svelte';
+    import router from 'page';
+    import { user } from '../auth/index';
 
-    let user = "35h356h35";
+    // Declare states
+    let currentuser;
+
+    // Declare reactive statements for redirection if user is not logged in
+    $: {
+      currentuser = $user;
+      if(!currentuser) {
+        router.redirect("/login")
+      }
+    }
 </script>
 
 <main>
-    {#if user}
+    {#if currentuser}
         <h1 class="header-call-action">My Listing</h1>
         <Listing />
         <EditListing />

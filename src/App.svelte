@@ -21,23 +21,6 @@
   let page;
   let params;
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDMcOBXFry4daxIxTMlJL5twW0aFqq-62E",
-    authDomain: "autolance-617.firebaseapp.com",
-    databaseURL: "https://autolance-617.firebaseio.com",
-    projectId: "autolance-617",
-    storageBucket: "autolance-617.appspot.com",
-    messagingSenderId: "218900921287",
-    appId: "1:218900921287:web:ef0384dc3215438bb6b7e2",
-    measurementId: "G-13TQ6HPS8X"
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  } else {
-    firebase.app(); // if already initialized, use that one
-  }
-
   // Login Page Route
   router('/login', () => (page = LoginPage))
 
@@ -52,13 +35,6 @@
 
   // Dashboard Page Route, If No User Detected -> Send to Login
   router('/', () => (page = Dashboard))
-
-  // If the user is not set, redirect to login
-  if (typeof($user) == "undefined" || $user == null) {
-    router.redirect('/login')
-  } else {
-    page = Dashboard
-  }
 
   // Set up the router to start and actively watch for changes
   router.start()

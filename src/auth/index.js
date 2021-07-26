@@ -20,10 +20,6 @@ const auth = firebase.auth();
 
 export let user = readable(null, (set) => {
   auth.onAuthStateChanged(function(user) {
-    auth.currentUser.getIdToken(true).then(function(idToken) {
-      set(idToken)
-    }).catch(function(error) {
-      alert("Error: " + error.message)
-    });
+    set(auth.currentUser)
   });
 });

@@ -2,24 +2,37 @@
     import {onMount} from 'svelte';
     import MatchGrid from "../components/MatchGrid.svelte";
     import OnboardDash from '../components/OnboardDash.svelte';
+    import router from 'page';
+    import { user } from '../auth/index';
+    import Loader from "../components/Loader.svelte";
 
+    // Declare states
     let retMatches;
-    let user = {
-      id: "nQlctvrF2SYFplFJ3viagqtq8H82",
-      Vetted: false
-    };
+    let currentuser;
 
-    onMount(async () => {
-        const res = await fetch("/api/getMatches?uid=" + user.id);
-        const matchesRet = await res.json();
-        retMatches = matchesRet;
-    });
+    // Declare reactive statements for redirection if user is not logged in
+    $: {
+      currentuser = $user;
+      if(!currentuser) {
+        router.redirect("/login")
+      } else{
+        onMount(async () => {
+          const res = await fetch("/api/getMatches?uid=" + currentuser.uid);
+          const matchesRet = await res.json();
+          retMatches = matchesRet;
+        });
+      }
+    }
 </script>
   
   <main>
-    {#if user.Vetted}
-      <MatchGrid matches={retMatches} />
+    {#if !currentuser}
+      <Loader />
     {:else}
-      <OnboardDash />
+      {#if !currentuser}
+        <MatchGrid matches={retMatches} />
+      {:else}
+        <OnboardDash />
+      {/if}
     {/if}
   </main>

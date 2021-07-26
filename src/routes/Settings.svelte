@@ -1,10 +1,28 @@
 <script>
     import SettingForm from '../components/SettingForm.svelte'
+    import Loader from '../components/Loader.svelte';
+    import router from 'page';
+    import { user } from '../auth/index';
+
+    // Declare states
+    let currentuser;
+
+    // Declare reactive statements for redirection if user is not logged in
+    $: {
+      currentuser = $user;
+      if(!currentuser) {
+        router.redirect("/login")
+      }
+    }
 </script>
 
 <main>
-    <h1 class="header-call-action">Settings</h1>
-    <SettingForm />
+    {#if !currentuser}
+      <Loader />
+    {:else}
+        <h1 class="header-call-action">Settings</h1>
+        <SettingForm />
+    {/if}
 </main>
 
 <style>
