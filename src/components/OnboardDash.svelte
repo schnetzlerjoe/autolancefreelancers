@@ -1,15 +1,15 @@
 <script>
     import Steps from './Steps.svelte'
     import Tags from "svelte-tags-input";
+    import Loader from './Loader.svelte'
     import { user } from '../auth/index';
-    import { onDestroy } from 'svelte';
     import { get } from 'svelte/store';
 
     // Set component states
     let currentuser = get(user);
-    let freelancerData;
     let links;
     let industries;
+    let loading = true;
 
     //// Define functions ////
     
@@ -49,16 +49,14 @@
         industries = event.detail.tags;
     }
 
-    $: {
-        freelancerData;
-    }
+    let promise = getFreelancer()
 
-    getFreelancer().then((fdata) => {
-        freelancerData = fdata;
-    }).then(() => {
-        links = freelancerData["Links"];
-        industries = freelancerData["Industries"];
-    });
+//    getFreelancer().then((fdata) => {
+//        freelancerData = fdata;
+//    }).then(() => {
+//        links = freelancerData["Links"];
+//        industries = freelancerData["Industries"];
+//    });
 
     //// End Functions ////
 </script>
@@ -67,47 +65,53 @@
     <link rel='stylesheet' href='https://svelte-tags-input.vercel.app/svelte-tags-input-css.css'>
 </svelte:head>
 
-<div class="section">
-    <h1 class="header-call-action">Onboarding</h1>
-    <div class="columns is-multiline is-centered">
-        <div class="column is-12 is-centered">
-            <Steps />
-        </div>
-        <div class="column is-12 is-centered">
-            <label class="label field-label">Logo</label>
-        </div>
-        <div class="column is-12 is-centered">
-            <figure class="image is-128x128">
-                <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-            </figure>
-        </div>
-        <div class="column is-12 is-centered">
-            <label class="label field-label">Name</label>
-        </div>
-        <div class="column is-12 is-centered">
-            <input type="text" class="input" placeholder="Enter your name or company name" id="name" required>
-        </div>
-        <div class="column is-12 is-centered">
-            <label class="label field-label">List Your Focus Industries</label>
-        </div>
-        <div class="column is-12 is-centered">
-            <div class="Tags">
-                <Tags on:tags={e => setIndustries(e)} id="industries" maxTags={5} onlyUnique={true} tags={industries}></Tags>
+{#await promise}
+    <Loader text="Gathering Your Data..."/>
+{:then freelancerData}
+    <div class="section">
+        <h1 class="header-call-action">Onboarding</h1>
+        <div class="columns is-multiline is-centered">
+            <div class="column is-12 is-centered">
+                <Steps />
             </div>
-        </div>
-        <div class="column is-12 is-centered">
-            <label class="label field-label">Share Any Links</label>
-        </div>
-        <div class="column is-12 is-centered">
-            <div class="Tags">
-                <Tags on:tags={e => setLinks(e)} id="links" maxTags={5} onlyUnique={true} tags={links}></Tags>
+            <div class="column is-12 is-centered">
+                <label class="label field-label">Logo</label>
             </div>
-        </div>
-        <div class="column is-12">
-            <button on:click={updateFreelancer(industries, links)} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
+            <div class="column is-12 is-centered">
+                <figure class="image is-128x128">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                </figure>
+            </div>
+            <div class="column is-12 is-centered">
+                <label class="label field-label">Name</label>
+            </div>
+            <div class="column is-12 is-centered">
+                <input type="text" class="input" placeholder="Enter your name or company name" id="name" required>
+            </div>
+            <div class="column is-12 is-centered">
+                <label class="label field-label">List Your Focus Industries</label>
+            </div>
+            <div class="column is-12 is-centered">
+                <div class="Tags">
+                    <Tags on:tags={e => setIndustries(e)} id="industries" maxTags={5} onlyUnique={true} tags={freelancerData.Industries}></Tags>
+                </div>
+            </div>
+            <div class="column is-12 is-centered">
+                <label class="label field-label">Share Any Links</label>
+            </div>
+            <div class="column is-12 is-centered">
+                <div class="Tags">
+                    <Tags on:tags={e => setLinks(e)} id="links" maxTags={5} onlyUnique={true} tags={freelancerData.Links}></Tags>
+                </div>
+            </div>
+            <div class="column is-12">
+                <button on:click={updateFreelancer(industries, links)} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
+            </div>
         </div>
     </div>
-</div>
+{:catch error}
+    <p>error.message</p>
+{/await}
 
 <style>
 .Tags :global(.svelte-tags-input-tag) {
