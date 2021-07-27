@@ -7,7 +7,8 @@ const firebaseConfig = {
   authDomain: "autolance-617.firebaseapp.com",
   projectId: "autolance-617",
   appId: "1:218900921287:web:ef0384dc3215438bb6b7e2",
-  measurementId: "G-13TQ6HPS8X"
+  measurementId: "G-13TQ6HPS8X",
+  storageBucket: "autolance-617.appspot.com"
 };
 
 if (!firebase.apps.length) {

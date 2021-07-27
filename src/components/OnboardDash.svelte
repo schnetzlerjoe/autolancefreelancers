@@ -4,11 +4,26 @@
     import Loader from './Loader.svelte'
     import { user } from '../auth/index';
     import { get } from 'svelte/store';
+    import { onMount } from 'svelte';
+    import firebase from "firebase/app";
+    import "firebase/storage";
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyDMcOBXFry4daxIxTMlJL5twW0aFqq-62E",
+            authDomain: "autolance-617.firebaseapp.com",
+            projectId: "autolance-617",
+            storageBucket: "autolance-617.appspot.com"
+        });
+    } else {
+        firebase.app();
+    }
 
     // Set component states
     let currentuser = get(user);
     let links;
     let industries;
+    let profilePic = "https://bulma.io/images/placeholders/128x128.png";
     let loading = true;
 
     //// Define functions ////
@@ -49,16 +64,23 @@
         industries = event.detail.tags;
     }
 
+    function uploadProfilePic(file) {
+        var currentDate = new Date().getTime()
+        // Create a root reference
+        var storageRef = firebase.storage().ref();
+
+        // Create a reference to 'mountains.jpg'
+        var profilePicRef = storageRef.child("profilePics/" + String(currentDate) + "-" + file.name);
+
+        // 'file' comes from the Blob or File API
+        profilePicRef.put(file).then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((downloadURL) => {
+                profilePic = downloadURL;
+            });
+        });
+    }
+
     let promise = getFreelancer()
-
-//    getFreelancer().then((fdata) => {
-//        freelancerData = fdata;
-//    }).then(() => {
-//        links = freelancerData["Links"];
-//        industries = freelancerData["Industries"];
-//    });
-
-    //// End Functions ////
 </script>
 
 <svelte:head>
@@ -72,21 +94,26 @@
         <h1 class="header-call-action">Onboarding</h1>
         <div class="columns is-multiline is-centered">
             <div class="column is-12 is-centered">
-                <Steps />
+                <Steps currentStage={freelancerData['Vet Stage']}/>
             </div>
             <div class="column is-12 is-centered">
                 <label class="label field-label">Logo</label>
             </div>
             <div class="column is-12 is-centered">
-                <figure class="image is-128x128">
-                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-                </figure>
+                <div id="profilePic" class="file">
+                    <label class="file-label">
+                        <input on:change={e => {uploadProfilePic(e.target.files[0])}} class="file-input fileUpload" type="file" name="resume">
+                        <figure class="image is-128x128">
+                            <img class="is-rounded" src={profilePic}>
+                        </figure>
+                    </label>
+                    </div>
             </div>
             <div class="column is-12 is-centered">
                 <label class="label field-label">Name</label>
             </div>
             <div class="column is-12 is-centered">
-                <input type="text" class="input" placeholder="Enter your name or company name" id="name" required>
+                <input type="text" class="input" placeholder="Enter your name or company name" id="name" value={freelancerData.Name} required>
             </div>
             <div class="column is-12 is-centered">
                 <label class="label field-label">List Your Focus Industries</label>
@@ -114,6 +141,9 @@
 {/await}
 
 <style>
+.fileUpload {
+    width: 0px;
+}
 .Tags :global(.svelte-tags-input-tag) {
     background-color: #6c757d;
     color: #fff;

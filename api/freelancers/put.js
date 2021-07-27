@@ -10,6 +10,7 @@ if (!admin.apps.length) {
  }
 
 const db = admin.firestore();
+const storage = admin.storage();
 
 function putFreelancers(freelancer, body) {
     return new Promise((resolve, reject) => {
