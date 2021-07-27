@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('C:/Users/bigkn/OneDrive/Documents/autolancefreelancers-1/credentials.json');
+const serviceAccount = require('/Users/user/Documents/autolancefreelancers/autolancefreelancers/credentials.json');
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -36,7 +36,6 @@ async function getAllFreelancersMatchDocs(uid) {
                 match.get().then((newDoc) => {
                     rawData = newDoc.data()
                     getCompanyInfoFromReference(rawData["Company"]).then((comp) => {
-                        console.log(comp)
                     })
                 }).then(() => {
                     data.push(rawData)
@@ -49,12 +48,7 @@ async function getAllFreelancersMatchDocs(uid) {
 }
 
 module.exports = async (req, res) => {
-    console.log(req.cookie);
-    const cookieValue = req.cookie
-    .split('; ')
-    .find(row => row.startsWith('token='))
-    .split('=')[1];
-    const user = await admin.auth().verifyIdToken(cookieValue);
+    const user = await admin.auth().verifyIdToken(req.headers["authorization"]);
     getAllFreelancersMatchDocs(user.uid).then((data) => {
         res.status(200).json(data);
     })

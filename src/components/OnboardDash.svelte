@@ -2,41 +2,65 @@
     import Steps from './Steps.svelte'
     import Tags from "svelte-tags-input";
     import { user } from '../auth/index';
+    import { onDestroy } from 'svelte';
+    import { get } from 'svelte/store';
 
-    let links = ["https://www.linkedin.com/", "https://github.com/", "https://dribbble.com/"];
-    let industries = ["FreelanceTech", "B2B"];
+    // Set component states
+    let currentuser = get(user);
+    let freelancerData;
+    let links;
+    let industries;
 
-    let currentuser;
-
-    async function setTokenCookie(currentuser) {
-        var token = await currentuser.getIdToken(true);
-        document.cookie = "token=" + token + "; SameSite=None; Secure; HttpOnly";
-    }
-
-    // Declare reactive statements for redirection if user is not logged in
-    $: {
-        currentuser = $user;
-        if(currentuser && currentuser != null) {
-            setTokenCookie();
-        }
-    }
-
-    async function updateFreelancer() {
+    //// Define functions ////
+    
+    async function updateFreelancer(industries, links) {
         var data = {
             name: document.getElementById("name").value,
-            industries: document.getElementById("industries").value,
-            links: document.getElementById("links").value
+            industries: industries,
+            links: links
         };
-        const token = await currentuser.getIdToken();
+        const token = await currentuser.getIdToken(true);
         const res = await fetch("/api/freelancers/put", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': token
+                'Authorization': token,
+                'Content-Type': 'application/json'
             })
           });
     }
+
+    async function getFreelancer() {
+        const token = await currentuser.getIdToken(true);
+        const res = await fetch("/api/freelancers/get", {
+            method: 'GET',
+            headers: new Headers({
+                'Authorization': token
+            })
+          });
+          return res.json()
+    }
+
+    function setLinks(event) {
+        links = event.detail.tags;
+    }
+
+    function setIndustries(event) {
+        industries = event.detail.tags;
+    }
+
+    $: {
+        freelancerData;
+    }
+
+    getFreelancer().then((fdata) => {
+        freelancerData = fdata;
+    }).then(() => {
+        links = freelancerData["Links"];
+        industries = freelancerData["Industries"];
+    });
+
+    //// End Functions ////
 </script>
 
 <svelte:head>
@@ -68,7 +92,7 @@
         </div>
         <div class="column is-12 is-centered">
             <div class="Tags">
-                <Tags id="industries" maxTags={5} onlyUnique={true} tags={industries}></Tags>
+                <Tags on:tags={e => setIndustries(e)} id="industries" maxTags={5} onlyUnique={true} tags={industries}></Tags>
             </div>
         </div>
         <div class="column is-12 is-centered">
@@ -76,11 +100,11 @@
         </div>
         <div class="column is-12 is-centered">
             <div class="Tags">
-                <Tags id="links" maxTags={5} onlyUnique={true} tags={links}></Tags>
+                <Tags on:tags={e => setLinks(e)} id="links" maxTags={5} onlyUnique={true} tags={links}></Tags>
             </div>
         </div>
         <div class="column is-12">
-            <button on:click={updateFreelancer} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
+            <button on:click={updateFreelancer(industries, links)} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
         </div>
     </div>
 </div>

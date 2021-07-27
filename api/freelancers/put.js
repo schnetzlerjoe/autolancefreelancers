@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('C:/Users/bigkn/OneDrive/Documents/autolancefreelancers-1/credentials.json');
+const serviceAccount = require('/Users/user/Documents/autolancefreelancers/autolancefreelancers/credentials.json');
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -11,20 +11,18 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-function putFreelancers(freelancer, description = null, main_skill = null, name = null, rate = null, skills = null, links = null, industries = null) {
+function putFreelancers(freelancer, body) {
     return new Promise((resolve, reject) => {
-        var ref = db.collection.doc(freelancer);
+        var ref = db.collection("Freelancers_Dev").doc(freelancer);
         var data = {};
 
-        console.log(skills)
-
-        if(description != null) {data["description"] = description};
-        if(main_skill != null) {data["main_skill"] = main_skill};
-        if(name != null) {data["name"] = name};
-        if(rate != null) {data["rate"] = rate};
-        if(skills != null) {data["skills"] = skills};
-        if(links != null) {data["links"] = links};
-        if(industries != null) {data["industries"] = industries};
+        if(body.description) {data["Description"] = body.description};
+        if(body.main_skill) {data["Main Skill"] = body.main_skill};
+        if(body.name) {data["Name"] = body.name};
+        if(body.rate) {data["Rate"] = body.rate};
+        if(body.skills) {data["Skills"] = body.skills};
+        if(body.links) {data["Links"] = body.links};
+        if(body.industries) {data["Industries"] = body.industries};
 
         ref.update(data).then((ret) => {
             resolve({ret: ret, data: data})
@@ -32,10 +30,10 @@ function putFreelancers(freelancer, description = null, main_skill = null, name 
     })
 }
 
-module.exports = (req, res) => {
-    admin.auth().verifyIdToken(req.get('Authorization').split(' ')[1]).then((token) => {
-        putFreelancers(token.uid, req.body.description, req.body.main_skill, req.body.name, req.body.rate, req.body.skills).then((data) => {
-            res.status(200).json(data);
-        })
+module.exports = async (req, res) => {
+    const user = await admin.auth().verifyIdToken(req.headers["authorization"]);
+    const { body } = req;
+    putFreelancers(user.uid, body).then((data) => {
+        res.status(200).json(data);
     })
 };
