@@ -1,10 +1,40 @@
 <script>
-    let name;
-</script>
+    import Switch from "svelte-switch";
 
+    let name;
+    let acceptingNewProjects;;
+
+    function acceptingProjectChange(e) {
+        const { checked } = e.detail;
+        acceptingNewProjects = checked;
+    }
+</script>
 
 <div class="section">
     <div class="columns is-multiline is-centered">
+        <div class="column is-12 is-centered">
+            <label class="label field-label">Accepting New Projects</label>
+        </div>
+        <div class="column is-12 is-centered">
+            <div align="left">
+                <Switch
+                    checked={acceptingNewProjects}
+                    on:change={acceptingProjectChange}
+                    onColor="#86d3ff"
+                    onHandleColor="#2693e6"
+                    handleDiameter={30}
+                    unCheckedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                    containerClass="react-switch"
+                    id="material-switch">
+                    <span slot="checkedIcon" />
+                    <span slot="unCheckedIcon" />
+                </Switch>
+            </div>
+        </div>
         <div class="column is-12 is-centered">
             <label class="label field-label">Logo</label>
         </div>
@@ -29,6 +59,10 @@
 </div>
 
 <style>
+.toggleText {
+    color: #fff;
+    font-family: Arial,sans-serif;
+}
 .item {
     margin-top: 10px;
 }

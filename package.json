@@ -21,6 +21,7 @@
     "firebase-admin": "^9.11.0",
     "page": "^1.11.6",
     "sirv-cli": "^1.0.0",
+    "svelte-switch": "0.0.4",
     "svelte-tags-input": "^2.7.1",
     "sveltefire": "^0.1.5"
   }

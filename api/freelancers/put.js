@@ -24,6 +24,7 @@ function putFreelancers(freelancer, body) {
         if(body.skills) {data["Skills"] = body.skills};
         if(body.links) {data["Links"] = body.links};
         if(body.industries) {data["Industries"] = body.industries};
+        if(body.logo) {data["Logo"] = body.logo};
 
         ref.update(data).then((ret) => {
             resolve({ret: ret, data: data})

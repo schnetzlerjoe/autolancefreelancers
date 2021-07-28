@@ -23,8 +23,7 @@
     let currentuser = get(user);
     let links;
     let industries;
-    let profilePic = "https://bulma.io/images/placeholders/128x128.png";
-    let loading = true;
+    let profilePic;
 
     //// Define functions ////
     
@@ -32,7 +31,8 @@
         var data = {
             name: document.getElementById("name").value,
             industries: industries,
-            links: links
+            links: links,
+            logo: profilePic
         };
         const token = await currentuser.getIdToken(true);
         const res = await fetch("/api/freelancers/put", {
@@ -62,6 +62,10 @@
 
     function setIndustries(event) {
         industries = event.detail.tags;
+    }
+
+    function setProfilePic(url) {
+        profilePic = url;
     }
 
     function uploadProfilePic(file) {
@@ -104,7 +108,7 @@
                     <label class="file-label">
                         <input on:change={e => {uploadProfilePic(e.target.files[0])}} class="file-input fileUpload" type="file" name="resume">
                         <figure class="image is-128x128">
-                            <img class="is-rounded" src={profilePic}>
+                            <img class="is-rounded" src={profilePic ? profilePic : freelancerData.Logo}>
                         </figure>
                     </label>
                     </div>

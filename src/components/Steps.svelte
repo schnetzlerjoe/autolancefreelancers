@@ -31,7 +31,7 @@
         <p class="stepTextPara">A one on one meeting with Autolance.</p>
         </div>
     </li>
-    <li id="step3" class="steps-segment is-active">
+    <li id="step3" class="steps-segment">
         <span class="steps-marker"></span>
         <div class="steps-content">
         <p class="is-size-4 stepText">Stage 3</p>

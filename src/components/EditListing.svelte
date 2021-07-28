@@ -1,7 +1,14 @@
 <script>
     import Tags from "svelte-tags-input";
+    import Switch from "svelte-switch";
 
     let tags = ["Python", "API", "Flask", "Django"]
+    let subscription;
+
+    function acceptingProjectChange(e) {
+        const { checked } = e.detail;
+        subscription = checked;
+    }
 </script>
 
 <svelte:head>
@@ -11,6 +18,29 @@
 <div class="section">
     <div class="columns is-multiline is-centered">
         <div class="column is-12 is-centered">
+            <label class="label field-label">Subscription</label>
+        </div>
+        <div class="column is-12 is-centered">
+            <div align="left">
+                <Switch
+                    checked={subscription}
+                    on:change={acceptingProjectChange}
+                    onColor="#86d3ff"
+                    onHandleColor="#2693e6"
+                    handleDiameter={30}
+                    unCheckedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                    containerClass="react-switch"
+                    id="material-switch">
+                    <span slot="checkedIcon" />
+                    <span slot="unCheckedIcon" />
+                </Switch>
+            </div>
+        </div>
+        <div class="column is-12 is-centered">
             <label class="label field-label">Skill Tags</label>
         </div>
         <div class="column is-12 is-centered">
@@ -18,24 +48,20 @@
                 <Tags maxTags={10} onlyUnique={true} tags={tags}></Tags>
             </div>
         </div>
-        <div class="column is-12 is-centered">
-            <div class="columns">
-                <div class="column is-6">
-                    <div class="column is-12 is-centered">
-                        <label class="label field-label">Availability</label>
-                    </div>
-                    <div class="column is-12 is-centered">
-                        <input type="text" class="input" maxlength="256" data-name="" placeholder="Enter password" id="availability" required="">
-                    </div>
-                </div>
-                <div class="column is-6">
-                    <div class="column is-12 is-centered">
-                        <label class="label field-label">Monthly Subscription Price</label>
-                    </div>
-                    <div class="column is-12 is-centered">
-                        <input type="text" class="input" maxlength="256" data-name="" placeholder="Enter password" id="monthlySubscriptionPrice" required="">
-                    </div>
-                </div>
+        <div class="column is-6" style={"padding:0px"}>
+            <div class="column is-12">
+                <label class="label field-label">Availability</label>
+            </div>
+            <div class="column is-12">
+                <input type="text" class="input skillTagInput" maxlength="256" data-name="" placeholder="Enter password" id="availability" required>
+            </div>
+        </div>
+        <div class="column is-6" style={"padding:0px"}>
+            <div class="column is-12">
+                <label class="label field-label">Monthly Subscription Price</label>
+            </div>
+            <div class="column is-12">
+                <input type="text" class="input skillTagInput" maxlength="256" data-name="" placeholder="Enter password" id="monthlySubscriptionPrice" required>
             </div>
         </div>
         <div class="column is-12 is-centered">
@@ -51,6 +77,13 @@
 </div>
 
 <style>
+.toggleText {
+    color: #fff;
+    font-family: Arial,sans-serif;
+    line-height: 20px;
+    text-align: left;
+    font-weight: 700;
+}
 .skillTagInput :global(.svelte-tags-input-tag) {
     background-color: #6c757d;
     color: #fff;
@@ -115,13 +148,12 @@ input {
     width: 100%;
     background-color: #fff;
     border-color: #dbdbdb;
-    border-radius: 4px;
     color: #363636;
     -moz-appearance: none;
     -webkit-appearance: none;
     align-items: center;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 7px;
     box-shadow: none;
     display: inline-flex;
     font-size: 1rem;
