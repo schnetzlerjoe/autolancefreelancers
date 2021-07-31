@@ -1,43 +1,56 @@
 <script>
     import {onMount} from 'svelte';
-    import MatchGrid from "../components/MatchGrid.svelte";
-    import OnboardDash from '../components/OnboardDash.svelte';
-    import router from 'page';
-    import { user } from '../auth/index';
-    import Loader from "../components/Loader.svelte";
+    import MatchGrid from "../lib/components/MatchGrid.svelte";
+    import OnboardDash from '../lib/components/OnboardDash.svelte';
+    import Loader from "../lib/components/Loader.svelte";
+    import { user } from '../stores/user'
+    import firebase from 'firebase/app';
+
+    const firebaseConfig = {
+      apiKey: process.env.apiKey,
+      authDomain: process.env.authDomain,
+      projectId: process.env.projectId,
+      appId: process.env.appId,
+      measurementId: process.env.measurementId,
+      storageBucket: process.env.storageBucket
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      firebase.app();
+    }
+
+    let error = null;
+
+    const loginHandler = async event => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value
+      try {
+        error = null;
+        await loginWithEmailPassword(email, password);
+      } catch (err) {
+        error = err;
+      }
+    };
 
     // Declare states
     let retMatches;
     let currentuser;
 
-    // Declare reactive statements for redirection if user is not logged in
-    $: {
-      currentuser = $user;
-      if(!currentuser) {
-        router.redirect("/login")
-      } else {
-        onMount(async () => {
-          const token = await currentuser.getIdToken();
-          const res = await fetch("/api/getMatches", {
-            headers: new Headers({
-              'Authorization': token
-            })
-          });
-          const matchesRet = await res.json();
-          retMatches = matchesRet;
-        });
-      }
-    }
+    $: {currentuser = $user}
 </script>
   
   <main>
-    {#if !currentuser}
-      <Loader />
+    {#if currentuser}
+      <OnboardDash currentuser={currentuser}/>
     {:else}
-      {#if !currentuser}
-        <MatchGrid matches={retMatches} />
-      {:else}
-        <OnboardDash />
-      {/if}
+      <Loader />
     {/if}
   </main>
+
+<style>
+  main {
+    max-width: 90%;
+  }
+</style>

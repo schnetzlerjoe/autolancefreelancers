@@ -1,23 +1,14 @@
 <script>
-    import Steps from './Steps.svelte'
+    import firebase from 'firebase/app';
+    import 'firebase/storage';
+
+    import Steps from './Steps.svelte';
+    import Button from './Button.svelte';
     import Tags from "svelte-tags-input";
     import Loader from './Loader.svelte'
-    import { user } from '../auth/index';
     import { get } from 'svelte/store';
     import { onMount } from 'svelte';
-    import firebase from "firebase/app";
-    import "firebase/storage";
-
-    if (!firebase.apps.length) {
-        firebase.initializeApp({
-            apiKey: "AIzaSyDMcOBXFry4daxIxTMlJL5twW0aFqq-62E",
-            authDomain: "autolance-617.firebaseapp.com",
-            projectId: "autolance-617",
-            storageBucket: "autolance-617.appspot.com"
-        });
-    } else {
-        firebase.app();
-    }
+    import { user } from '../stores/user';
 
     // Set component states
     let currentuser = get(user);
@@ -26,24 +17,6 @@
     let profilePic;
 
     //// Define functions ////
-    
-    async function updateFreelancer(industries, links) {
-        var data = {
-            name: document.getElementById("name").value,
-            industries: industries,
-            links: links,
-            logo: profilePic
-        };
-        const token = await currentuser.getIdToken(true);
-        const res = await fetch("/api/freelancers/put", {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            })
-          });
-    }
 
     async function getFreelancer() {
         const token = await currentuser.getIdToken(true);
@@ -105,13 +78,13 @@
             </div>
             <div class="column is-12 is-centered">
                 <div id="profilePic" class="file">
-                    <label class="file-label">
-                        <input on:change={e => {uploadProfilePic(e.target.files[0])}} class="file-input fileUpload" type="file" name="resume">
-                        <figure class="image is-128x128">
-                            <img class="is-rounded" src={profilePic ? profilePic : freelancerData.Logo}>
-                        </figure>
-                    </label>
-                    </div>
+                  <label class="file-label">
+                      <input on:change={e => {uploadProfilePic(e.target.files[0])}} class="file-input fileUpload" type="file" name="resume">
+                      <figure class="image is-128x128">
+                          <img class="is-rounded" src={profilePic ? profilePic : freelancerData.Logo}>
+                      </figure>
+                  </label>
+                </div>
             </div>
             <div class="column is-12 is-centered">
                 <label class="label field-label">Name</label>
@@ -136,7 +109,7 @@
                 </div>
             </div>
             <div class="column is-12">
-                <button on:click={updateFreelancer(industries, links)} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
+                <Button onboard={true} currentuser={currentuser} industries={industries} links={links} profilePic={profilePic}/>
             </div>
         </div>
     </div>

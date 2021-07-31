@@ -1,52 +1,30 @@
 <script>
-    export let user;
+    import Loader from './Loader.svelte'
+
+    export let currentuser;
+    export let data;
 </script>
 
 <div class="search-div">
     <div class="columns">
         <div class="column is-6">
-            <h1 class="freelancer-name">Joe Schnetzler</h1>
+            <h1 class="freelancer-name">{data.name}</h1>
         </div>
         <div class="column is-6 alignRight" align="right">
-            <a href="#" id="subscribe-button" class="subscribe-button w-button">Subscribe</a>
+            <button on:click={e => alert("This is just a preview button. It does not actually work.")} disabled id="subscribe-button" class="subscribe-button w-button">Subscribe</button>
         </div>
     </div>
     <div class="block">
         <p class="paragraph-11">
-            <strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</strong>
+            <strong>{data.deliverables}</strong>
         </p>
     </div>
     <div id="skill-tags-grid" class="columns is-multiline">
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Data Science</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Python</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Selenium</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Web Scraper</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Data Mining</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Data Scraping</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Deep Learning</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Machine Learning</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Data Visualization</a>
-        </div>
-        <div class="column is-2">
-            <a href="#" class="skill-tags w-button">Artificial Intelligence</a>
-        </div>
+        {#each data.skills as skill}
+            <div class="column is-2">
+                <button class="skill-tags w-button">{skill}</button>
+            </div>
+        {/each}
     </div>
 </div>
 

@@ -1,3 +1,4 @@
+  
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { readable } from 'svelte/store';
@@ -19,7 +20,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 
-export let user = readable(null, (set) => {
+export let user = readable(auth.currentUser, (set) => {
   auth.onAuthStateChanged(async function(user) {
     set(user)
   });
