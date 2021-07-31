@@ -7,6 +7,7 @@
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
+    "@sveltejs/adapter-vercel": "next",
     "@sveltejs/kit": "next",
     "firebase": "^8.8.1",
     "firebase-admin": "^9.11.0",
@@ -14,8 +15,7 @@
     "svelte": "^3.34.0",
     "svelte-switch": "0.0.4",
     "sveltefire": "^0.1.5",
-    "vercel": "^23.0.1",
-		"@sveltejs/adapter-vercel": "next"
+    "vercel": "^23.0.1"
   },
   "type": "module",
   "dependencies": {
@@ -24,7 +24,7 @@
     "cookie": "^0.4.1",
     "svelte-tags-input": "^2.7.1"
   },
-	"engines": {
-		"node": ">= 14.0.0"
-	}
+  "engines": {
+    "node": ">= 14.0.0"
+  }
 }

@@ -3,7 +3,7 @@
     import MatchGrid from "../lib/components/MatchGrid.svelte";
     import OnboardDash from '../lib/components/OnboardDash.svelte';
     import Loader from "../lib/components/Loader.svelte";
-    import { user } from '../stores/user'
+    import { user } from '../lib/stores/user';
     import firebase from 'firebase/app';
 
     const firebaseConfig = {
