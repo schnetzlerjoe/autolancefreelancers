@@ -15,7 +15,6 @@
     "svelte-switch": "0.0.4",
     "sveltefire": "^0.1.5",
     "vercel": "^23.0.1",
-		"@sveltejs/adapter-node": "next",
 		"@sveltejs/adapter-vercel": "next"
   },
   "type": "module",
