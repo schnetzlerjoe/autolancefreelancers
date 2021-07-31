@@ -4,7 +4,7 @@
     import OnboardDash from '../lib/components/OnboardDash.svelte';
     import Loader from "../lib/components/Loader.svelte";
     import { user } from '../lib/stores/user';
-    import firebase from 'firebase/app';
+    import firebase from 'firebase/compat/app';
 
     const firebaseConfig = {
       apiKey: process.env.apiKey,

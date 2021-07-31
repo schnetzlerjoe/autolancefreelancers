@@ -1,6 +1,6 @@
   
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 import { readable } from 'svelte/store';
 
 const firebaseConfig = {
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 if (!firebase.apps.length) {
-   firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 } else {
    firebase.app();
 }

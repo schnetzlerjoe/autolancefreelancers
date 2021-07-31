@@ -1,7 +1,6 @@
 <script>
     export let user;
-    import firebase from 'firebase/app';
-    import 'firebase/auth';
+    import firebase from 'firebase/compat/app';
     const firebaseConfig = {
         apiKey: "AIzaSyDMcOBXFry4daxIxTMlJL5twW0aFqq-62E",
         authDomain: "autolance-617.firebaseapp.com",

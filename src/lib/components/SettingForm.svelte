@@ -1,7 +1,7 @@
 <script>
-    import firebase from 'firebase/app';
-    import 'firebase/storage';
-    import 'firebase/auth';
+    import firebase from 'firebase/compat/app';
+    import 'firebase/compat/storage';
+    import 'firebase/compat/auth';
     import Switch from "svelte-switch";
     import Button from './Button.svelte';
     import Loader from './Loader.svelte';

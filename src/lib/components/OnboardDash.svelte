@@ -1,6 +1,6 @@
 <script>
-    import firebase from 'firebase/app';
-    import 'firebase/storage';
+    import firebase from 'firebase/compat/app';
+    import 'firebase/compat/storage';
 
     import Steps from './Steps.svelte';
     import Button from './Button.svelte';
