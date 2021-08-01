@@ -1,6 +1,7 @@
 <script>
     import SettingForm from '../lib/components/SettingForm.svelte';
     import Loader from '../lib/components/Loader.svelte';
+    import Login from '../lib/components/Login.svelte';
     import { user } from '../lib/stores/user'
 
     // Declare states
@@ -15,7 +16,7 @@
 
 <main>
     {#if !currentuser}
-      <Loader />
+        <Login />
     {:else}
         <h1 class="header-call-action">Settings</h1>
         <SettingForm />
@@ -23,6 +24,9 @@
 </main>
 
 <style>
+main {
+    width: 90%;
+}
 .header-call-action {
     margin-bottom: 30px;
     color: #fff;

@@ -22,7 +22,7 @@
     }
 </script>
 
-<div class="section">
+<div style={"width:100%"} class="section">
     <h1 class="header-call-action">Login</h1>
     <form>
         <div class="columns is-multiline is-centered">

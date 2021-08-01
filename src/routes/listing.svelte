@@ -2,6 +2,7 @@
     import EditListing from '../lib/components/EditListing.svelte';
     import Listing from '../lib/components/Listing.svelte';
     import Loader from '../lib/components/Loader.svelte';
+    import Login from '../lib/components/Login.svelte';
     import { user } from '../lib/stores/user';
 
     // Declare states
@@ -11,11 +12,11 @@
 </script>
 
 <main>
-    <h1 class="header-call-action">My Listing</h1>
     {#if currentuser}
+        <h1 class="header-call-action">My Listing</h1>
         <EditListing currentuser={currentuser}/>
     {:else}
-        <Loader text="Gathering Your Data..."/>
+        <Login/>
     {/if}
 </main>
 
@@ -29,6 +30,7 @@
     text-align: center;
 }
 main {
-  max-width: 90%;
+    margin-top: 15px;
+    width: 90%;
 }
 </style>

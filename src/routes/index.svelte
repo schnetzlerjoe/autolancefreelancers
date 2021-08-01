@@ -36,6 +36,6 @@
 
 <style>
 main {
-  max-width: 90%;
+    width: 90%;
 }
 </style>
