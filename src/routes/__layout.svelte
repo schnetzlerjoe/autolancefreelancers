@@ -9,7 +9,7 @@
 	<slot />
 </main>
 
-<Footer />>
+<Footer />
 
 <style>
 	slot {

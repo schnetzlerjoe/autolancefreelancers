@@ -121,13 +121,12 @@
 }
 .Tags :global(.svelte-tags-input-tag) {
     background-color: #6c757d;
+    background: #6c757d;
     color: #fff;
     font-size: 16px;
     font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 700;
     height: 70%;
-    align-items: center;
-    justify-content: center;
 }
 .Tags :global(.svelte-tags-input-tag-remove) {
     font-size: 16px;
@@ -144,8 +143,6 @@
     color: #333333;
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    align-items: center;
-    justify-content: center;
 }
 .header-call-action {
     margin-bottom: 40px;

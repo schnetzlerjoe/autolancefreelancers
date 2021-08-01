@@ -1,6 +1,4 @@
 <script>
-    import Loader from './Loader.svelte'
-
     export let currentuser;
     export let data;
 </script>
@@ -11,7 +9,11 @@
             <h1 class="freelancer-name">{data.name}</h1>
         </div>
         <div class="column is-6 alignRight" align="right">
-            <button on:click={e => alert("This is just a preview button. It does not actually work.")} disabled id="subscribe-button" class="subscribe-button w-button">Subscribe</button>
+            {#if data.subscription}
+                <button on:click={e => alert("This is just a preview button. It does not actually work.")} disabled id="subscribe-button" class="subscribe-button w-button">Subscribe</button>
+            {:else}
+                <button on:click={e => alert("This is just a preview button. It does not actually work.")} disabled id="subscribe-button" class="subscribe-button w-button">Purchase</button>
+            {/if}
         </div>
     </div>
     <div class="block">
@@ -86,6 +88,7 @@
 }
 .skill-tags {
     display: block;
+    width: 100%;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
@@ -99,5 +102,6 @@
     font-weight: 600;
     text-align: center;
     cursor: default;
+    font-size: medium;
 }
 </style>

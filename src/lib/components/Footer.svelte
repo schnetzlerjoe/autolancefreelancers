@@ -64,6 +64,8 @@ export let user;
 <style>
     footer {
         background-color: #011028;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     li {
         padding-left: 0px;

@@ -1,4 +1,5 @@
 <script>
+    import PricingDisplay from './PricingDisplay.svelte';
     import Tags from "svelte-tags-input";
     import Switch from "svelte-switch";
     import Loader from './Loader.svelte'
@@ -29,6 +30,7 @@
           data["availability"] = json['Availability'];
           data["rate"] = json['Rate'];
           data["deliverables"] = json['Deliverables'];
+          data['fixedDeliverable'] = json['Fixed_Deliverable'];
     };
   
     async function updateFreelancerListing(data) {
@@ -80,30 +82,15 @@
                     </Switch>
                 </div>
             </div>
-            <div class="column is-12 is-centered">
+            <div class="column is-12">
                 <label class="label field-label">Skill Tags</label>
             </div>
-            <div class="column is-12 is-centered">
+            <div class="column is-12">
                 <div class="skillTagInput">
                     <Tags on:tags={e => data['skills'] = e.detail.tags} maxTags={10} onlyUnique={true} tags={data.skills}></Tags>
                 </div>
             </div>
-            <div class="column is-6" style={"padding:0px"}>
-                <div class="column is-12">
-                    <label class="label field-label">Availability</label>
-                </div>
-                <div class="column is-12">
-                    <input on:change={e => data['availability'] = e.target.value} value={data.availability} type="text" class="input skillTagInput" maxlength="256" data-name="" placeholder="Enter password" id="availability" required>
-                </div>
-            </div>
-            <div class="column is-6" style={"padding:0px"}>
-                <div class="column is-12">
-                    <label class="label field-label">Monthly Subscription Price</label>
-                </div>
-                <div class="column is-12">
-                    <input on:change={e => data['rate'] = e.target.value} value={data.rate} type="text" class="input skillTagInput" maxlength="256" data-name="" placeholder="Enter password" id="monthlySubscriptionPrice" required>
-                </div>
-            </div>
+            <PricingDisplay data={data}/>
             <div class="column is-12 is-centered">
                 <label class="label field-label">Deliverables</label>
             </div>
@@ -135,13 +122,12 @@
 }
 .skillTagInput :global(.svelte-tags-input-tag) {
     background-color: #6c757d;
+    background: #6c757d;
     color: #fff;
     font-size: 16px;
     font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 700;
     height: 70%;
-    align-items: center;
-    justify-content: center;
 }
 .skillTagInput :global(.svelte-tags-input-tag-remove) {
     font-size: 16px;
@@ -158,8 +144,6 @@
     color: #333333;
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    align-items: center;
-    justify-content: center;
 }
 .field-label {
     color: #fff;

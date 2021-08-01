@@ -28,6 +28,7 @@ function putFreelancers(freelancer, body) {
         if(typeof(body.subscription) != "undefined") {data["Subscription"] = body.subscription};
         if(typeof(body.availability) != "undefined") {data["Availability"] = body.availability};
         if(typeof(body.deliverables) != "undefined") {data["Deliverables"] = body.deliverables};
+        if(typeof(body.fixedDeliverable) != "undefined") {data["Fixed_Deliverable"] = body.fixedDeliverable};
 
         ref.update(data).then((ret) => {
             resolve({ret: ret, data: data})
