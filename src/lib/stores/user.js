@@ -1,6 +1,5 @@
-  
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { readable } from 'svelte/store';
 
 const firebaseConfig = {
@@ -12,16 +11,12 @@ const firebaseConfig = {
   storageBucket: "autolance-617.appspot.com"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-   firebase.app();
-}
+var app;
+getApps().length === 0 ? app = initializeApp(firebaseConfig) : app = getApp();
+const auth = getAuth(app);
 
-const auth = firebase.auth();
-
-export let user = readable(auth.currentUser, (set) => {
-  auth.onAuthStateChanged(async function(user) {
+export let user = readable(null, (set) => {
+  onAuthStateChanged(auth, async function(user) {
     set(user)
   });
 });

@@ -1,19 +1,19 @@
 <script>
-    import firebase from 'firebase/compat/app';
-    import 'firebase/compat/storage';
-    import 'firebase/compat/auth';
+    import { initializeApp, getApps, getApp } from 'firebase/app';
+    import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+    import { getStorage, ref } from "firebase/storage";
     import Switch from "svelte-switch";
     import Button from './Button.svelte';
     import Loader from './Loader.svelte';
+    import { get } from 'svelte/store'
+    import { onMount } from 'svelte';
+    import { user } from '../stores/user';
 
     // Set component states
     let currentuser = get(user);
     let profilePic;
     let name;
     let acceptingNewProjects;
-    import { get } from 'svelte/store'
-    import { onMount } from 'svelte';
-    import { user } from '../stores/user';
 
     //// Define functions ////
 
@@ -41,10 +41,9 @@
     function uploadProfilePic(file) {
         var currentDate = new Date().getTime()
         // Create a root reference
-        var storageRef = firebase.storage().ref();
+        const storage = getStorage();
 
-        // Create a reference to 'mountains.jpg'
-        var profilePicRef = storageRef.child("profilePics/" + String(currentDate) + "-" + file.name);
+        const profilePicRef = ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
 
         // 'file' comes from the Blob or File API
         profilePicRef.put(file).then((snapshot) => {
@@ -55,7 +54,8 @@
     }
 
     function sendResetPassEmail() {
-      firebase.auth().sendPasswordResetEmail(currentuser.email)
+        const auth = getAuth(app);
+        sendPasswordResetEmail(auth, currentuser.email)
         .then(() => {
           alert("Reset email has been sent to your email.")
         })

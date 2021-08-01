@@ -1,6 +1,5 @@
 <script>
-    import firebase from 'firebase/compat/app';
-    import 'firebase/compat/storage';
+    import { getStorage, ref } from "firebase/storage";
 
     import Steps from './Steps.svelte';
     import Button from './Button.svelte';
@@ -44,10 +43,9 @@
     function uploadProfilePic(file) {
         var currentDate = new Date().getTime()
         // Create a root reference
-        var storageRef = firebase.storage().ref();
+        const storage = getStorage();
 
-        // Create a reference to 'mountains.jpg'
-        var profilePicRef = storageRef.child("profilePics/" + String(currentDate) + "-" + file.name);
+        const profilePicRef = ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
 
         // 'file' comes from the Blob or File API
         profilePicRef.put(file).then((snapshot) => {
