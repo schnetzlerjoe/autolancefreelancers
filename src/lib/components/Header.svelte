@@ -32,7 +32,7 @@
                 Home
             </a>
 
-            <a class="navbar-item a-hover" href="/settings">
+            <a class="navbar-item a-hover" href="/setting">
                 Settings
             </a>
 
