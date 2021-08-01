@@ -1,35 +1,37 @@
 <script>
 </script>
 
-<div class="section">
-    <h1 class="header-call-action">Signup</h1>
-    <div class="columns is-multiline is-centered">
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Email</label>
-        </div>
-        <div class="column is-11 is-centered">
-            <input type="email" class="input" maxlength="256" data-name="" placeholder="Enter your email" id="signinemail" required="">
-        </div>
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Password</label>
-        </div>
-        <div class="column is-11 is-centered">
-            <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpass" required="">
-        </div>
-        <div class="column is-11 is-centered">
-            <label class="label field-label">Confirm Password</label>
-        </div>
-        <div class="column is-11 is-centered">
-            <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpassconfirm" required="">
-        </div>
-        <div class="column is-11 is-centered">
-            <a href="/"><label class="label field-label signup-login-toggle-text">Have an account already?</label></a>
-        </div>
-        <div class="column is-11 is-centered">
-            <button type="submit" data-wait="Please wait..." id="signinButton" class="button login-button margin-top-fifteen">Signup</button>
+<main>
+    <div class="section">
+        <h1 class="header-call-action">Signup</h1>
+        <div class="columns is-multiline is-centered">
+            <div class="column is-11 is-centered">
+                <label class="label field-label">Email</label>
+            </div>
+            <div class="column is-11 is-centered">
+                <input type="email" class="input" maxlength="256" data-name="" placeholder="Enter your email" id="signinemail" required="">
+            </div>
+            <div class="column is-11 is-centered">
+                <label class="label field-label">Password</label>
+            </div>
+            <div class="column is-11 is-centered">
+                <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpass" required="">
+            </div>
+            <div class="column is-11 is-centered">
+                <label class="label field-label">Confirm Password</label>
+            </div>
+            <div class="column is-11 is-centered">
+                <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpassconfirm" required="">
+            </div>
+            <div class="column is-11 is-centered">
+                <a href="/"><label class="label field-label signup-login-toggle-text">Have an account already?</label></a>
+            </div>
+            <div class="column is-11 is-centered">
+                <button type="submit" data-wait="Please wait..." id="signinButton" class="button login-button margin-top-fifteen">Signup</button>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 <style>
 .header-call-action {
