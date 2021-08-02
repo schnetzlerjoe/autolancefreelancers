@@ -13,7 +13,7 @@ const db = firebase.firestore();
 
 function getFreelancer(uid) {
     return new Promise((resolve, reject) => {
-        db.collection("Freelancers_Dev").doc(uid).get().then((doc) => {
+        db.collection("Freelancers").doc(uid).get().then((doc) => {
             resolve(doc.data());
         })
     })

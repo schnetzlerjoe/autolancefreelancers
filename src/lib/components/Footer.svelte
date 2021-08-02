@@ -14,13 +14,13 @@ export let user;
                         <a href="/" class="nav-link footer-link">Home</a>
                     </li>
                     <li>
-                        <a href="/pricing" class="nav-link footer-link">Pricing</a>
+                        <a href="https://www.autolance.co/pricing" class="nav-link footer-link">Pricing</a>
                     </li>
                     <li>
-                        <a href="/freelancers" class="nav-link footer-link">Freelancers</a>
+                        <a href="https://www.autolance.co/freelancers" class="nav-link footer-link">Freelancers</a>
                     </li>
                     <li>
-                        <a href="autolance.co/blog" class="nav-link footer-link">Blog</a>
+                        <a href="https://blog.autolance.co/" class="nav-link footer-link">Blog</a>
                     </li>
                 </ul>
             </div>
@@ -30,13 +30,13 @@ export let user;
                         <h1 class="heading-2">Contact</h1>
                     </li>
                     <li class="list-item">
-                        <a href="#" class="nav-link contact mobile">Made In The Hudson Valley Of New York</a>
+                        <a href="" class="nav-link contact mobile">Made In The Hudson Valley Of New York</a>
                     </li>
                     <li class="list-item">
-                        <a href="#" class="nav-link contact mobile">845-243-0062</a>
+                        <a href="" class="nav-link contact mobile">845-243-0062</a>
                     </li>
                     <li class="list-item">
-                        <a href="#" class="nav-link contact"><strong class="bold-text">contact@autolance.co</strong>
+                        <a href="" class="nav-link contact"><strong class="bold-text">contact@autolance.co</strong>
                         </a>
                     </li>
                 </ul>

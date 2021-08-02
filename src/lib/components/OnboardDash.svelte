@@ -69,7 +69,7 @@
         <h1 class="header-call-action">Onboarding</h1>
         <div class="columns is-multiline is-centered">
             <div class="column is-12 is-centered">
-                <Steps currentStage={freelancerData['Vet Stage']}/>
+                <Steps currentStage={freelancerData['Vet_Stage']}/>
             </div>
             <div class="column is-12 is-centered">
                 <label class="label field-label">Logo</label>

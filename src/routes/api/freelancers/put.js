@@ -13,7 +13,7 @@ const db = firebase.firestore();
 
 function putFreelancers(freelancer, body) {
     return new Promise((resolve, reject) => {
-        var ref = db.collection("Freelancers_Dev").doc(freelancer);
+        var ref = db.collection("Freelancers").doc(freelancer);
         var data = {};
 
         if(typeof(body.description) != "undefined") {data["Description"] = body.description};

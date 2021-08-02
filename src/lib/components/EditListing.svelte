@@ -95,7 +95,7 @@
                 <label class="label field-label">Deliverables</label>
             </div>
             <div class="column is-12 is-centered">
-                <textarea on:change={e => data['deliverables'] = e.target.value} value={data.deliverables} class="input textarea" maxlength="256" placeholder="Python, Flask, API" id="skilltags" required></textarea>
+                <textarea on:change={e => data['deliverables'] = e.target.value} value={data.deliverables} class="input textarea" maxlength="256" placeholder="Describe your deliverable." id="deliverables" required></textarea>
             </div>
             <div class="column is-12 is-centered">
             {#if loading}

@@ -5,10 +5,15 @@
 {#if data.subscription}
     <div class="column is-6" style={"padding:0px"}>
         <div class="column is-12">
-            <label class="label field-label">Availability</label>
+            <label class="label field-label">Availability Per Week</label>
         </div>
         <div class="column is-12">
-            <input on:change={e => data['availability'] = e.target.value} value={data.availability} type="text" class="input skillTagInput" maxlength="256" data-name="" placeholder="Enter password" id="availability" required>
+            <select on:change={e => data['availability'] = e.target.value} class="input skillTagInput" value={data.availability} name="availability" id="availability">
+                <option value="20 or less hours">20 Hours or Less</option>
+                <option value="20-30 hours">20-30 Hours</option>
+                <option value="30-40 hours">30-40 Hours</option>
+                <option value="40+ hours">40 Hours or More</option>
+            </select>
         </div>
     </div>
     <div class="column is-6" style={"padding:0px"}>
@@ -58,6 +63,30 @@
     padding: 5px;
 }
 input {
+    height: 60px;
+    box-shadow: inset 0 0.0625em 0.125em rgb(10 10 10 / 5%);
+    max-width: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-color: #dbdbdb;
+    border-radius: 7px;
+    color: #363636;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    align-items: center;
+    border: 1px solid transparent;
+    display: inline-flex;
+    font-size: 1rem;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: calc(.75em - 1px);
+    padding-right: calc(.75em - 1px);
+    padding-top: calc(.5em - 1px);
+    position: relative;
+    vertical-align: top;
+}
+select {
     height: 60px;
     box-shadow: inset 0 0.0625em 0.125em rgb(10 10 10 / 5%);
     max-width: 100%;

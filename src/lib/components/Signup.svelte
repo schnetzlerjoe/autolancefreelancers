@@ -20,7 +20,7 @@
             <label class="label field-label">Confirm Password</label>
         </div>
         <div class="column is-11 is-centered">
-            <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpassconfirm" required="">
+            <input type="password" class="input" maxlength="256" data-name="" placeholder="Confirm password" id="signinpassconfirm" required="">
         </div>
         <div class="column is-11 is-centered">
             <a href="/login"><label class="label field-label signup-login-toggle-text">Have an account already?</label></a>

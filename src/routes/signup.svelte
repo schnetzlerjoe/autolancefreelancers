@@ -1,4 +1,54 @@
 <script>
+    import { user } from '../lib/stores/user';
+    import { goto } from '$app/navigation';
+    import { initializeApp, getApps, getApp } from 'firebase/app';
+    import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+    import { firebaseConfig } from '../lib/stores/config';
+    import { onMount } from 'svelte';
+
+    var app;
+    getApps().length === 0 ? app = initializeApp(firebaseConfig) : app = getApp();
+    const auth = getAuth(app);
+    const createUserWithEmailPassword = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
+    onMount(() => {
+        function signupHandler() {
+            var email = document.getElementById("signupemail").value;
+            var pass = document.getElementById("signuppass").value;
+            var passConfirm = document.getElementById("signuppassconfirm").value;
+            if(pass === passConfirm) {
+                createUserWithEmailPassword(email, pass).catch((error) => {
+                    alert(error.message)
+                })
+                goto("/")
+            } else {
+                alert("Passwords do not match.")
+            }
+        }
+        document.getElementById("signinButton").onclick = function signupHandler() {
+            var email = document.getElementById("signupemail").value;
+            var pass = document.getElementById("signuppass").value;
+            var passConfirm = document.getElementById("signuppassconfirm").value;
+            if(pass === passConfirm) {
+                createUserWithEmailPassword(email, pass).catch((error) => {
+                    alert(error.message)
+                })
+                goto("/")
+            } else {
+                alert("Passwords do not match.")
+            }
+        };
+    })
+
+    // Declare states
+    let currentuser;
+
+    $: {
+        currentuser = $user;
+        if(currentuser) {
+            goto("/")
+        }
+    }
 </script>
 
 <main>
@@ -9,25 +59,25 @@
                 <label class="label field-label">Email</label>
             </div>
             <div class="column is-11 is-centered">
-                <input type="email" class="input" maxlength="256" data-name="" placeholder="Enter your email" id="signinemail" required="">
+                <input type="email" class="input" maxlength="256" data-name="" placeholder="Enter your email" id="signupemail" required="">
             </div>
             <div class="column is-11 is-centered">
                 <label class="label field-label">Password</label>
             </div>
             <div class="column is-11 is-centered">
-                <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpass" required="">
+                <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signuppass" required="">
             </div>
             <div class="column is-11 is-centered">
                 <label class="label field-label">Confirm Password</label>
             </div>
             <div class="column is-11 is-centered">
-                <input type="password" class="input" maxlength="256" data-name="" placeholder="Enter password" id="signinpassconfirm" required="">
+                <input type="password" class="input" maxlength="256" data-name="" placeholder="Confirm password" id="signuppassconfirm" required="">
             </div>
             <div class="column is-11 is-centered">
                 <a href="/"><label class="label field-label signup-login-toggle-text">Have an account already?</label></a>
             </div>
             <div class="column is-11 is-centered">
-                <button type="submit" data-wait="Please wait..." id="signinButton" class="button login-button margin-top-fifteen">Signup</button>
+                <button id="signinButton" class="button login-button margin-top-fifteen">Signup</button>
             </div>
         </div>
     </div>
