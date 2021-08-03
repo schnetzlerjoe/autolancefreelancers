@@ -6,8 +6,18 @@
     var app;
     getApps().length === 0 ? app = initializeApp(firebaseConfig) : app = getApp();
     const auth = getAuth(app);
-    const loginWithEmailPassword = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
+    const loginWithEmailPassword = (email, password) => {
+        signInWithEmailAndPassword(auth, email, password)
+        .catch((error) => {
+            if(error.message === "Firebase: Error (auth/wrong-password).") {
+                alert("Wrong password. Please try again.");
+            } else if (error.message === "Firebase: Error (auth/user-not-found).") {
+                alert("This user does not exist.");
+            } else {
+                alert(error.message)
+            }
+        })
+    }
     function loginHandler() {
         var email = document.getElementById("email").value
         var pass = document.getElementById("password").value

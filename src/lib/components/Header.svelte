@@ -4,7 +4,6 @@
     import { getAuth, signOut } from 'firebase/auth';
     import { onMount } from 'svelte';
     import { firebaseConfig } from '../stores/config';
-    import { goto } from '$app/navigation';
 
     var app;
     getApps().length === 0 ? app = initializeApp(firebaseConfig) : app = getApp();
@@ -49,11 +48,11 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
-            <a onclick={goto("/")} class="navbar-item a-hover" href="/">
+            <a class="navbar-item a-hover" href="/">
                 Home
             </a>
 
-            <a onclick={goto("/setting")} class="navbar-item a-hover" href="/setting">
+            <a class="navbar-item a-hover" href="/setting">
                 Settings
             </a>
 
@@ -62,7 +61,7 @@
             </a>
 
             <div class="navbar-item" align="center">
-                <a onclick={goto("/listing")} class="button is-secondary" href="/listing">
+                <a class="button is-secondary" href="/listing">
                     <strong>My Listing</strong>
                 </a>
             </div>           
