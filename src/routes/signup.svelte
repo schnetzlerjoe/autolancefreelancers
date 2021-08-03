@@ -2,36 +2,38 @@
     import { user } from '../lib/stores/user';
     import { goto } from '$app/navigation';
     import { initializeApp, getApps, getApp } from 'firebase/app';
-    import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+    import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
     import { firebaseConfig } from '../lib/stores/config';
     import { onMount } from 'svelte';
 
     var app;
     getApps().length === 0 ? app = initializeApp(firebaseConfig) : app = getApp();
     const auth = getAuth(app);
-    const createUserWithEmailPassword = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
-    onMount(() => {
-        function signupHandler() {
-            var email = document.getElementById("signupemail").value;
-            var pass = document.getElementById("signuppass").value;
-            var passConfirm = document.getElementById("signuppassconfirm").value;
-            if(pass === passConfirm) {
-                createUserWithEmailPassword(email, pass).catch((error) => {
-                    alert(error.message)
-                })
-                goto("/")
+    const createUserWithEmailPassword = (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            signOut(auth);
+            alert("You have successfully signed up! Please login.")
+        })
+        .catch((error) => {
+            if(error.message === "Firebase: Error (auth/email-already-in-use).") {
+                alert("An account with this email already exists.");
+            } else if(error.message === "Firebase: Error (auth/weak-password).") {
+                alert("Weak password. Please try another.")
             } else {
-                alert("Passwords do not match.")
+                alert(error.message)
             }
-        }
+        });
+    }
+    onMount(() => {
         document.getElementById("signinButton").onclick = function signupHandler() {
             var email = document.getElementById("signupemail").value;
             var pass = document.getElementById("signuppass").value;
             var passConfirm = document.getElementById("signuppassconfirm").value;
             if(pass === passConfirm) {
-                createUserWithEmailPassword(email, pass).catch((error) => {
-                    alert(error.message)
+                createUserWithEmailPassword(email, pass)
+                .catch((error) => {
+                    alert(error.message);
                 })
                 goto("/")
             } else {
