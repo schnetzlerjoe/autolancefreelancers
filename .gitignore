@@ -4,4 +4,3 @@ node_modules
 /package
 /.svelte
 /.vercel_build_output
-.vercel
