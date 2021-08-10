@@ -4,11 +4,13 @@
     import Switch from "svelte-switch";
     import Loader from './Loader.svelte'
     import Listing from './Listing.svelte'
+    import Alert from './Alert.svelte'
 
     export let currentuser;
 
     let data = {};
     let loading;
+    let alert = false;
 
     function acceptingProjectChange(e) {
         const { checked } = e.detail;
@@ -45,6 +47,7 @@
           })
         });
       loading=false;
+      alert=true;
     }
 
     // Get freelancer data and set initial states
@@ -56,6 +59,7 @@
 </svelte:head>
 
 {#if Object.keys(data).length > 0}
+    <Alert display={alert} title={"Listing Saved"} message={"Your listing have been updated. Keep everything up to date to enhance your chance of getting matched to new gigs!"} />
     <Listing data={data} />
     <div class="section">
         <div class="columns is-multiline is-centered">

@@ -1,15 +1,13 @@
 <script>
+  import Alert from './Alert.svelte'
+
   export let currentuser;
   export let industries;
   export let links;
   export let profilePic;
   export let onboard;
   export let accepting;
-  export let subscription;
-  export let skill_tags;
-  export let availablity;
-  export let price;
-  export let delivarable;
+  let alert = false;
   let loading;
 
   //// Define functions ////
@@ -32,6 +30,7 @@
           })
         });
       loading=false;
+      alert=true;
   }
   async function updateFreelancer(accepting) {
       loading=true;
@@ -50,6 +49,7 @@
           })
         });
       loading=false;
+      alert=true;
   }
 </script>
 {#if loading}
@@ -58,8 +58,10 @@
     </button>
 {:else}
   {#if onboard}
+    <Alert display={alert} title={"Submission Accepted"} message={"Your information has been saved. Please make sure you added all information to liken your chances of being onboarded. You can edit your submission at any time. We will get back to you if you are to move to Stage 2!"} />
     <button on:click={updateFreelancerOnboard(industries, links)} id="saveButton" class="button login-button margin-top-fifteen">Save</button>
   {:else}
+    <Alert display={alert} title={"Settings Saved"} message={"Your settings have been saved. Keep everything up to date to enhance your chance of getting matched to new gigs!"} />
     <button on:click={updateFreelancer(accepting)} id="saveButton" class="button login-button margin-top-fifteen">Save Changes</button>
   {/if}
 {/if}

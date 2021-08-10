@@ -1,5 +1,5 @@
 <script>
-    import { getStorage, ref } from "firebase/storage";
+    import { getStorage, ref, uploadBytes, getDownloadURL, getMetadata } from "firebase/storage";
 
     import Steps from './Steps.svelte';
     import Button from './Button.svelte';
@@ -8,12 +8,14 @@
     import { get } from 'svelte/store';
     import { onMount } from 'svelte';
     import { user } from '../stores/user';
+    import Alert from './Alert.svelte';
 
     // Set component states
     let currentuser = get(user);
     let links;
     let industries;
     let profilePic;
+    let filealert = false;
 
     //// Define functions ////
 
@@ -40,19 +42,22 @@
         profilePic = url;
     }
 
-    function uploadProfilePic(file) {
+    async function uploadProfilePic(file) {
         var currentDate = new Date().getTime()
-        // Create a root reference
+
         const storage = getStorage();
 
-        const profilePicRef = ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
+        const profilePicRef = await ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
 
-        // 'file' comes from the Blob or File API
-        profilePicRef.put(file).then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((downloadURL) => {
-                profilePic = downloadURL;
+        if(file.type == "image/jpeg" || file.type == "image/jpg") {
+            uploadBytes(profilePicRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((downloadURL) => {
+                    profilePic = downloadURL;
+                });
             });
-        });
+        } else {
+            filealert = true;
+        }
     }
 
     let promise = getFreelancer()
@@ -65,6 +70,7 @@
 {#await promise}
     <Loader text="Gathering Your Data..."/>
 {:then freelancerData}
+    <Alert className={"is-danger"} display={filealert} title={"Wrong File Type"} message={"Your logo image must be a JPEG or JPG file. Please upload the correct file to change your logo."} />
     <div class="section">
         <h1 class="header-call-action">Onboarding</h1>
         <div class="columns is-multiline is-centered">
