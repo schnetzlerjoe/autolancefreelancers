@@ -1,19 +1,21 @@
 <script>
     import { initializeApp, getApps, getApp } from 'firebase/app';
     import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-    import { getStorage, ref } from "firebase/storage";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
     import Switch from "svelte-switch";
     import Button from './Button.svelte';
     import Loader from './Loader.svelte';
     import { get } from 'svelte/store'
     import { onMount } from 'svelte';
     import { user } from '../stores/user';
+    import Alert from './Alert.svelte';
 
     // Set component states
     let currentuser = get(user);
     let profilePic;
     let name;
     let acceptingNewProjects;
+    let filealert = false;
 
     //// Define functions ////
 
@@ -38,19 +40,22 @@
         profilePic = url;
     }
 
-    function uploadProfilePic(file) {
+    async function uploadProfilePic(file) {
         var currentDate = new Date().getTime()
-        // Create a root reference
+
         const storage = getStorage();
 
-        const profilePicRef = ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
+        const profilePicRef = await ref(storage, "profilePics/" + String(currentDate) + "-" + file.name);
 
-        // 'file' comes from the Blob or File API
-        profilePicRef.put(file).then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((downloadURL) => {
-                profilePic = downloadURL;
+        if(file.type == "image/jpeg" || file.type == "image/jpg") {
+            uploadBytes(profilePicRef, file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((downloadURL) => {
+                    profilePic = downloadURL;
+                });
             });
-        });
+        } else {
+            filealert = true;
+        }
     }
 
     function sendResetPassEmail() {
@@ -72,6 +77,7 @@
 {#await promise}
   <Loader text="Gathering Your Data..."/>
 {:then freelancerData}
+    <Alert className={"is-danger"} display={filealert} title={"Wrong File Type"} message={"Your logo image must be a JPEG or JPG file. Please upload the correct file to change your logo."} />
   <div class="section">
       <div class="columns is-multiline is-centered">
           <div class="column is-12 is-centered">
